@@ -14,174 +14,182 @@ import java.util.Random;
 
 public class JuegoActivity extends AppCompatActivity {
 
-    private ImageView mainImage;
-    private ProgressBar progressBar;
-    private ImageView option1, option2, option3, option4;
-    private Button checkButton;
-    private int correctOption; // Índice de la opción correcta
-    private boolean hasSelected = false;
-    private ImageView[] options;
-    private int selectedOptionIndex = -1; // Índice de la imagen seleccionada actualmente
+    private ImageView imatgePrincipal;
+    private ProgressBar barraDeProgres;
+    private ImageView imatgeOpcio1, imatgeOpcio2, imatgeOpcio3, imatgeOpcio4;
+    private Button botoVerifica;
+    private int opcioCorrecte;
+    private boolean seleccionat = false;
+    private ImageView[] arrayOpcions;
+    private int seleccioIndex = -1;
 
-    // Arreglos de imágenes por personaje
-    private int[] bayonettaImages = {
+    private int[] bayonettaI = {
             R.drawable.bayonetta0, R.drawable.bayonetta1, R.drawable.bayonetta2,
             R.drawable.bayonetta3
     };
 
-    private int[] donkeyImages = {
+    private int[] donkeyI = {
             R.drawable.donkey0, R.drawable.donkey1, R.drawable.donkey2,
             R.drawable.donkey3
     };
 
-    private int[] sonicImages = {
+    private int[] sonicI = {
             R.drawable.sonic0, R.drawable.sonic1, R.drawable.sonic2,
             R.drawable.sonic3
     };
+    private int[] canelaI = {
+            R.drawable.canela0, R.drawable.canela1, R.drawable.canela2,
+            R.drawable.canela3
+    };
+    private int[] greninjaI = {
+            R.drawable.greninja0, R.drawable.greninja1, R.drawable.greninja2,
+            R.drawable.greninja3
+    };
+    private int[] ikeI = {
+            R.drawable.ike0, R.drawable.ike1, R.drawable.ike2,
+            R.drawable.ike3
+    };
+    private int[] incineroarI = {
+            R.drawable.incineroar0, R.drawable.incineroar1, R.drawable.incineroar2,
+            R.drawable.incineroar3
+    };
+    private int[] linkI = {
+            R.drawable.link0, R.drawable.link1, R.drawable.link2,
+            R.drawable.link3
+    };
+    private int[] steveI = {
+            R.drawable.steve0, R.drawable.steve1, R.drawable.steve2,
+            R.drawable.steve3
+    };
+    private int[] terryI = {
+            R.drawable.terry0, R.drawable.terry1, R.drawable.terry2,
+            R.drawable.terry3
+    };
 
-    // Mantén un arreglo de arreglos para acceder fácilmente
-    private int[][] characterImageSets = {bayonettaImages, donkeyImages, sonicImages};
-    private int[] currentImageSet;
+    private int[][] personatges = {bayonettaI, donkeyI, sonicI, canelaI, greninjaI, ikeI, incineroarI, linkI, steveI, terryI};
+    private int[] actualImatgesSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
 
-        mainImage = findViewById(R.id.mainImage);
-        progressBar = findViewById(R.id.progressBar);
-        option1 = findViewById(R.id.option1);
-        option2 = findViewById(R.id.option2);
-        option3 = findViewById(R.id.option3);
-        option4 = findViewById(R.id.option4);
-        checkButton = findViewById(R.id.checkButton);
+        imatgePrincipal = findViewById(R.id.imatgePrincipal);
+        barraDeProgres = findViewById(R.id.barraDeProgres);
+        imatgeOpcio1 = findViewById(R.id.imatgeOpcio1);
+        imatgeOpcio2 = findViewById(R.id.imatgeOpcio2);
+        imatgeOpcio3 = findViewById(R.id.imatgeOpcio3);
+        imatgeOpcio4 = findViewById(R.id.imatgeOpcio4);
+        botoVerifica = findViewById(R.id.botoVerifica);
 
-        options = new ImageView[] {option1, option2, option3, option4};
+        arrayOpcions = new ImageView[] {imatgeOpcio1, imatgeOpcio2, imatgeOpcio3, imatgeOpcio4};
 
-        // Ocultar opciones al inicio
-        hideOptions();
+        ocultarOpcions();
 
-        // Inicia el juego
-        startNewGame();
+        crearJoc();
     }
 
-    private void startNewGame() {
+    private void crearJoc() {
         Random random = new Random();
 
-        // Selecciona aleatoriamente un conjunto de imágenes de un personaje
-        int characterIndex = random.nextInt(characterImageSets.length);
-        currentImageSet = characterImageSets[characterIndex];
+        int personatgeIndex = random.nextInt(personatges.length);
+        actualImatgesSet = personatges[personatgeIndex];
 
-        // Lista para mantener un registro de los índices ya utilizados
-        List<Integer> usedIndices = new ArrayList<>();
+        List<Integer> indexU = new ArrayList<>();
 
-        // Selecciona una imagen aleatoria de ese personaje como imagen principal
-        int randomImageIndex = random.nextInt(currentImageSet.length);
-        mainImage.setImageResource(currentImageSet[randomImageIndex]);
+        int randomIndex = random.nextInt(actualImatgesSet.length);
+        imatgePrincipal.setImageResource(actualImatgesSet[randomIndex]);
 
-        // Agrega el índice de la imagen principal a la lista de usados
-        usedIndices.add(randomImageIndex);
+        indexU.add(randomIndex);
 
-        // Establece cuál será la imagen correcta entre las opciones
-        correctOption = random.nextInt(4);
-        options[correctOption].setImageResource(currentImageSet[randomImageIndex]);
+        opcioCorrecte = random.nextInt(4);
+        arrayOpcions[opcioCorrecte].setImageResource(actualImatgesSet[randomIndex]);
 
-        // Asigna imágenes aleatorias (del mismo personaje) a las otras opciones, sin repetir
-        for (int i = 0; i < options.length; i++) {
-            if (i != correctOption) {
-                int otherImageIndex;
+        for (int i = 0; i < arrayOpcions.length; i++) {
+            if (i != opcioCorrecte) {
+                int altreIndex;
                 do {
-                    otherImageIndex = random.nextInt(currentImageSet.length);
-                } while (usedIndices.contains(otherImageIndex)); // Evita repeticiones
-                options[i].setImageResource(currentImageSet[otherImageIndex]);
-                usedIndices.add(otherImageIndex); // Marca este índice como usado
+                    altreIndex = random.nextInt(actualImatgesSet.length);
+                } while (indexU.contains(altreIndex));
+                arrayOpcions[i].setImageResource(actualImatgesSet[altreIndex]);
+                indexU.add(altreIndex);
             }
         }
 
-        // Oculta las opciones al inicio
-        hideOptions();
-        startTimer();
+        ocultarOpcions();
+        tempsImatge();
     }
 
-    private void startTimer() {
-        // Reinicia la barra de progreso para cada nuevo juego
-        progressBar.setMax(1000);
-        progressBar.setProgress(1000);
+    private void tempsImatge() {
+        barraDeProgres.setMax(1000);
+        barraDeProgres.setProgress(1000);
 
-        // Temporizador de 3 segundos
         new CountDownTimer(3000, 30) {
             public void onTick(long millisUntilFinished) {
-                int progress = (int) (millisUntilFinished * 1000 / 3000); // Escala a 1000 como max
-                progressBar.setProgress(progress);
+                int progress = (int) (millisUntilFinished * 1000 / 3000);
+                barraDeProgres.setProgress(progress);
             }
 
             public void onFinish() {
-                // Poner imagen negra y mostrar opciones
-                mainImage.setImageResource(android.R.color.black);
-                showOptions();
-                setOptionClickListeners();
+                imatgePrincipal.setImageResource(android.R.color.black);
+                ensenyaOpcions();
+                verficacio();
             }
         }.start();
     }
 
-    private void setOptionClickListeners() {
-        for (int i = 0; i < options.length; i++) {
+    private void verficacio() {
+        for (int i = 0; i < arrayOpcions.length; i++) {
             final int index = i;
-            options[i].setOnClickListener(v -> {
-                // Deseleccionar la imagen anterior
-                if (selectedOptionIndex != -1 && selectedOptionIndex != index) {
-                    options[selectedOptionIndex].setBackgroundResource(0);
+            arrayOpcions[i].setOnClickListener(v -> {
+                if (seleccioIndex != -1 && seleccioIndex != index) {
+                    arrayOpcions[seleccioIndex].setBackgroundResource(0);
                 }
 
-                // Marca la imagen actual con borde rojo
-                selectedOptionIndex = index;
-                options[index].setBackgroundResource(R.drawable.borde_rojo);
-
-                // Mostrar botón de verificar
-                if (!hasSelected) {
-                    checkButton.setVisibility(View.VISIBLE);
+                seleccioIndex = index;
+                arrayOpcions[index].setBackgroundResource(R.drawable.borde_rojo);
+                
+                if (!seleccionat) {
+                    botoVerifica.setVisibility(View.VISIBLE);
                 }
-                hasSelected = true;
+                seleccionat = true;
 
-                checkButton.setOnClickListener(v1 -> {
-                    if (selectedOptionIndex == correctOption) {
+                botoVerifica.setOnClickListener(v1 -> {
+                    if (seleccioIndex == opcioCorrecte) {
                         Toast.makeText(JuegoActivity.this, "¡Correcto!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(JuegoActivity.this, "Incorrecto", Toast.LENGTH_SHORT).show();
                     }
-
-                    // Reiniciar juego después de verificar
+                    
                     resetGame();
                 });
             });
         }
     }
 
-    private void hideOptions() {
-        for (ImageView option : options) {
+    private void ocultarOpcions() {
+        for (ImageView option : arrayOpcions) {
             option.setVisibility(View.INVISIBLE);
         }
-        checkButton.setVisibility(View.GONE);
+        botoVerifica.setVisibility(View.GONE);
     }
 
-    private void showOptions() {
-        for (ImageView option : options) {
+    private void ensenyaOpcions() {
+        for (ImageView option : arrayOpcions) {
             option.setVisibility(View.VISIBLE);
         }
     }
 
     private void resetGame() {
-        hasSelected = false;
-        selectedOptionIndex = -1;
+        seleccionat = false;
+        seleccioIndex = -1;
 
-        // Restablecer los bordes de las imágenes
-        for (ImageView option : options) {
+        for (ImageView option : arrayOpcions) {
             option.setBackgroundResource(0);
         }
 
-        // Ocultar opciones y reiniciar el juego
-        hideOptions();
-        startNewGame();
+        ocultarOpcions();
+        crearJoc();
     }
 }
 

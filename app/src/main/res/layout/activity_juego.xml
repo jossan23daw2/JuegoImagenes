@@ -9,8 +9,7 @@
         android:id="@+id/imatgePrincipal"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bayonetta0"/>
+        android:scaleType="centerCrop"/>
 
     <ProgressBar
         android:id="@+id/barraDeProgres"
@@ -46,7 +45,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="5dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"/>
 
         <ImageView
             android:id="@+id/imatgeOpcio4"
@@ -54,14 +53,13 @@
             android:layout_height="80dp"
             android:layout_margin="5dp"
             android:scaleType="centerCrop"/>
-
     </LinearLayout>
 
     <Button
         android:id="@+id/botoVerifica"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Verificar"
+        android:text="@string/verificar"
         android:layout_marginTop="10dp"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 </LinearLayout>

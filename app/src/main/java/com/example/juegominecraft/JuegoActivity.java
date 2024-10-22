@@ -1,13 +1,17 @@
 package com.example.juegominecraft;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,49 +26,21 @@ public class JuegoActivity extends AppCompatActivity {
     private boolean seleccionat = false;
     private ImageView[] arrayOpcions;
     private int seleccioIndex = -1;
+    private int contador = 0;
 
-    private int[] bayonettaI = {
-            R.drawable.bayonetta0, R.drawable.bayonetta1, R.drawable.bayonetta2,
-            R.drawable.bayonetta3
-    };
+    private SQLiteActivity dbHelper;
+    private int puntsActuals;
 
-    private int[] donkeyI = {
-            R.drawable.donkey0, R.drawable.donkey1, R.drawable.donkey2,
-            R.drawable.donkey3
-    };
-
-    private int[] sonicI = {
-            R.drawable.sonic0, R.drawable.sonic1, R.drawable.sonic2,
-            R.drawable.sonic3
-    };
-    private int[] canelaI = {
-            R.drawable.canela0, R.drawable.canela1, R.drawable.canela2,
-            R.drawable.canela3
-    };
-    private int[] greninjaI = {
-            R.drawable.greninja0, R.drawable.greninja1, R.drawable.greninja2,
-            R.drawable.greninja3
-    };
-    private int[] ikeI = {
-            R.drawable.ike0, R.drawable.ike1, R.drawable.ike2,
-            R.drawable.ike3
-    };
-    private int[] incineroarI = {
-            R.drawable.incineroar0, R.drawable.incineroar1, R.drawable.incineroar2,
-            R.drawable.incineroar3
-    };
-    private int[] linkI = {
-            R.drawable.link0, R.drawable.link1, R.drawable.link2,
-            R.drawable.link3
-    };
-    private int[] steveI = {
-            R.drawable.steve0, R.drawable.steve1, R.drawable.steve2,
-            R.drawable.steve3
-    };
-    private int[] terryI = {
-            R.drawable.terry0, R.drawable.terry1, R.drawable.terry2,
-            R.drawable.terry3
-    };
+    private int[] bayonettaI = {R.drawable.bayonetta0, R.drawable.bayonetta1, R.drawable.bayonetta2, R.drawable.bayonetta3};
+    private int[] donkeyI = {R.drawable.donkey0, R.drawable.donkey1, R.drawable.donkey2, R.drawable.donkey3};
+    private int[] sonicI = {R.drawable.sonic0, R.drawable.sonic1, R.drawable.sonic2, R.drawable.sonic3};
+    private int[] canelaI = {R.drawable.canela0, R.drawable.canela1, R.drawable.canela2, R.drawable.canela3};
+    private int[] greninjaI = {R.drawable.greninja0, R.drawable.greninja1, R.drawable.greninja2, R.drawable.greninja3};
+    private int[] ikeI = {R.drawable.ike0, R.drawable.ike1, R.drawable.ike2, R.drawable.ike3};
+    private int[] incineroarI = {R.drawable.incineroar0, R.drawable.incineroar1, R.drawable.incineroar2, R.drawable.incineroar3};
+    private int[] linkI = {R.drawable.link0, R.drawable.link1, R.drawable.link2, R.drawable.link3};
+    private int[] steveI = {R.drawable.steve0, R.drawable.steve1, R.drawable.steve2, R.drawable.steve3};
+    private int[] terryI = {R.drawable.terry0, R.drawable.terry1, R.drawable.terry2, R.drawable.terry3};
 
     private int[][] personatges = {bayonettaI, donkeyI, sonicI, canelaI, greninjaI, ikeI, incineroarI, linkI, steveI, terryI};
     private int[] actualImatgesSet;
@@ -84,8 +60,10 @@ public class JuegoActivity extends AppCompatActivity {
 
         arrayOpcions = new ImageView[] {imatgeOpcio1, imatgeOpcio2, imatgeOpcio3, imatgeOpcio4};
 
-        ocultarOpcions();
+        dbHelper = new SQLiteActivity(this);
+        puntsActuals = dbHelper.obtenirPunts();
 
+        ocultarOpcions();
         crearJoc();
     }
 
@@ -148,7 +126,7 @@ public class JuegoActivity extends AppCompatActivity {
 
                 seleccioIndex = index;
                 arrayOpcions[index].setBackgroundResource(R.drawable.borde_rojo);
-                
+
                 if (!seleccionat) {
                     botoVerifica.setVisibility(View.VISIBLE);
                 }
@@ -156,12 +134,16 @@ public class JuegoActivity extends AppCompatActivity {
 
                 botoVerifica.setOnClickListener(v1 -> {
                     if (seleccioIndex == opcioCorrecte) {
-                        Toast.makeText(JuegoActivity.this, "¡Correcto!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JuegoActivity.this, "Correcte!", Toast.LENGTH_SHORT).show();
+                        puntsActuals += 100;
                     } else {
-                        Toast.makeText(JuegoActivity.this, "Incorrecto", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JuegoActivity.this, "Incorrecte", Toast.LENGTH_SHORT).show();
+                        puntsActuals -= 50;
                     }
-                    
-                    resetGame();
+
+                    dbHelper.actualitzarPunts(puntsActuals);
+
+                    resetJoc();
                 });
             });
         }
@@ -171,7 +153,7 @@ public class JuegoActivity extends AppCompatActivity {
         for (ImageView option : arrayOpcions) {
             option.setVisibility(View.INVISIBLE);
         }
-        botoVerifica.setVisibility(View.GONE);
+            botoVerifica.setVisibility(View.INVISIBLE);
     }
 
     private void ensenyaOpcions() {
@@ -179,8 +161,13 @@ public class JuegoActivity extends AppCompatActivity {
             option.setVisibility(View.VISIBLE);
         }
     }
-
-    private void resetGame() {
+    private void mostrarPuntuacion() {
+        Intent intent = new Intent(JuegoActivity.this, PuntuacioFinalActivity.class);
+        intent.putExtra("PUNTS", puntsActuals);
+        startActivity(intent);
+        finish();
+    }
+    private void resetJoc() {
         seleccionat = false;
         seleccioIndex = -1;
 
@@ -189,7 +176,14 @@ public class JuegoActivity extends AppCompatActivity {
         }
 
         ocultarOpcions();
-        crearJoc();
+        contador++;
+
+        if (contador >= 2) {
+            mostrarPuntuacion();
+        } else {
+            crearJoc();
+        }
     }
+
 }
 

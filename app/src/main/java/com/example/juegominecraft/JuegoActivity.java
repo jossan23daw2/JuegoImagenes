@@ -109,7 +109,7 @@ public class JuegoActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                imatgePrincipal.setImageResource(android.R.color.black);
+                imatgePrincipal.setImageResource(R.mipmap.img);
                 ensenyaOpcions();
                 verficacio();
             }

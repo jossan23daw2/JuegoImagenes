@@ -21,29 +21,45 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <include layout="@layout/menu_contenido"></include>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:gravity="center"
+        android:padding="16dp"
+        android:layout_marginBottom="100dp">
 
-        <!-- Input para el nombre -->
         <EditText
             android:id="@+id/input_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Introduce tu nombre"
+            android:hint="@string/nombre"
             android:inputType="text" />
 
-        <!-- Botón para guardar el nombre -->
         <Button
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guardar Nombre"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:text="@string/jugar" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp"
+            app:srcCompat="@mipmap/s" />
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

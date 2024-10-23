@@ -3,4 +3,7 @@
     <string name="verificar">Verificar</string>
     <string name="puntuaciones">Punts: 0</string>
     <string name="puntuaFinal">PUNTUACIÓ</string>
+    <string name="ajustos">ajustos</string>
+    <string name="jugar">Jugar</string>
+    <string name="nombre">Introduce tu nombre</string>
 </resources>

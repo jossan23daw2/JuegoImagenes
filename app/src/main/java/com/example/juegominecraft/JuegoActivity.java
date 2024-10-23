@@ -26,6 +26,7 @@ public class JuegoActivity extends AppCompatActivity {
     private ImageView[] arrayOpcions;
     private int seleccioIndex = -1;
     private int contador = 0;
+    public String nombreJugador;
 
     private SQLiteActivity dbHelper;
     private int puntsActuals;
@@ -61,6 +62,15 @@ public class JuegoActivity extends AppCompatActivity {
 
         dbHelper = new SQLiteActivity(this);
         puntsActuals = dbHelper.obtenirPunts();
+
+        nombreJugador = getIntent().getStringExtra("NOMBRE_JUGADOR");
+
+        if (!dbHelper.jugadorExistent(nombreJugador)) {
+            dbHelper.insertarNouJugador(nombreJugador);
+        }
+
+        puntsActuals = dbHelper.obtenirPuntuacioPerNom(nombreJugador);
+
 
         ocultarOpcions();
         crearJoc();
@@ -140,7 +150,7 @@ public class JuegoActivity extends AppCompatActivity {
                         puntsActuals -= 50;
                     }
 
-                    dbHelper.actualitzarPunts(puntsActuals);
+                    dbHelper.actualizaPuntuacioJugador(nombreJugador, puntsActuals);
 
                     resetJoc();
                 });
@@ -177,7 +187,7 @@ public class JuegoActivity extends AppCompatActivity {
         ocultarOpcions();
         contador++;
 
-        if (contador >= 2) {
+        if (contador >= 1) {
             mostrarPuntuacion();
         } else {
             crearJoc();

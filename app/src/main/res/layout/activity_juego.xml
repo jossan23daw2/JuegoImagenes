@@ -1,0 +1,66 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/imatgePrincipal"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"/>
+
+    <ProgressBar
+        android:id="@+id/barraDeProgres"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:max="50"
+        android:progressTint="@color/rojo" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/imatgeOpcio1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:id="@+id/imatgeOpcio2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:id="@+id/imatgeOpcio3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:id="@+id/imatgeOpcio4"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/botoVerifica"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verificar"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"/>
+</LinearLayout>

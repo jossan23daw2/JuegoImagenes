@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         dbHelper = new SQLiteActivity(this);
         editTextNombre = findViewById(R.id.input_name);
@@ -66,8 +70,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obrirAjustos() {
-        Snackbar.make(coordinatorLayout, "AJUSTOS", Snackbar.LENGTH_SHORT)
+        Snackbar.make(coordinatorLayout, "AYUDA", Snackbar.LENGTH_SHORT)
                 .setAction("Action", null).show();
+        Intent intent = new Intent(MainActivity.this, AyudaActivity.class);
+        startActivity(intent);
+
     }
 
     private void guardarNombreEnDB(String nombre) {

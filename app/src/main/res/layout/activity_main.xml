@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
@@ -18,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary" />
+
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -31,6 +31,7 @@
         android:gravity="center"
         android:padding="16dp"
         android:layout_marginBottom="100dp">
+
 
         <EditText
             android:id="@+id/input_name"

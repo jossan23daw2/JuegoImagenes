@@ -6,4 +6,7 @@
     <string name="ajustos">ajustos</string>
     <string name="jugar">Jugar</string>
     <string name="nombre">Introduce tu nombre</string>
+    <string name="borrarProgreso">Borrar progreso</string>
+    <string name="volverJugar">Volver a jugar</string>
+
 </resources>

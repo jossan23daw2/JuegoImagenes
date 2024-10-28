@@ -1,5 +1,6 @@
 package com.example.juegominecraft;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
 
     private SQLiteActivity db;
     private TableLayout tablaPuntuaciones;
+    private Button volverJugar, btnBorrarProgreso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +24,8 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
 
         db = new SQLiteActivity(this);
         tablaPuntuaciones = findViewById(R.id.tablaPuntuacion);
-        Button btnBorrarProgreso = findViewById(R.id.btnBorrarProgreso);
+        btnBorrarProgreso = findViewById(R.id.btnBorrarProgreso);
+        volverJugar = findViewById(R.id.volverJugar);
 
         cargarDatos();
         btnBorrarProgreso.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +34,14 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
                 db.borrarTodo();
                 tablaPuntuaciones.removeAllViews();
                 Toast.makeText(PuntuacioFinalActivity.this, "Progreso borrado", Toast.LENGTH_SHORT).show();
+            }
+        });
+        volverJugar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PuntuacioFinalActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

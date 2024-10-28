@@ -3,10 +3,10 @@
     <string name="verificar">Verificar</string>
     <string name="puntuaciones">Punts: 0</string>
     <string name="puntuaFinal">PUNTUACIÓ</string>
-    <string name="ajustos">ajustos</string>
     <string name="jugar">Jugar</string>
     <string name="nombre">Introduce tu nombre</string>
     <string name="borrarProgreso">Borrar progreso</string>
     <string name="volverJugar">Volver a jugar</string>
+    <string name="ayuda">Ayuda</string>
 
 </resources>

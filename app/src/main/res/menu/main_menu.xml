@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_ayuda"
-        android:title="Ayuda"
+        android:title="@string/ayuda"
         app:showAsAction="never" />
 
 

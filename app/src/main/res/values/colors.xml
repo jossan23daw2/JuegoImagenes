@@ -5,4 +5,5 @@
     <color name="rojo">#FFC00000</color>
     <color name="lila">#8A2BE2</color>
     <color name="azul">#FF0000FF</color>
+    <color name="gris">#FF808080</color>
 </resources>

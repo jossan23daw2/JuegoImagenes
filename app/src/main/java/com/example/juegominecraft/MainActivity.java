@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
         dbHelper = new SQLiteActivity(this);
         editTextNombre = findViewById(R.id.input_name);
         Button btnGuardar = findViewById(R.id.button_save);

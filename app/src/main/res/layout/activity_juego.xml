@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/fondo2"
     tools:context=".JuegoActivity">
 
-    <!-- Toolbar en la parte superior -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout2"
         android:layout_width="match_parent"
@@ -17,10 +17,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
+            android:background="@color/rojo" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Contenido centrado -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -88,6 +87,7 @@
             android:text="@string/verificar"
             android:layout_marginTop="20dp"
             android:visibility="invisible"
+            android:backgroundTint="@color/rojo"
             android:layout_gravity="center"/>
 
     </LinearLayout>

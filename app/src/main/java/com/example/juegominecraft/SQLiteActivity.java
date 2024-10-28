@@ -96,4 +96,11 @@ public class SQLiteActivity extends SQLiteOpenHelper {
         cursor.close();
         return 0;
     }
+
+    public void borrarTodo() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TAULA_PUNTS, null, null);
+        db.close();
+    }
+
 }

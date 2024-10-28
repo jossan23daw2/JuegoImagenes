@@ -1,0 +1,130 @@
+/* General */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenedor principal */
+#contenedor {
+    max-width: 800px;
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.8); 
+    padding: 5px;
+    margin-top: 2%;
+    margin-bottom: 3%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Títulos */
+#titulo {
+    font-size: 36px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #4a90e2;
+    margin-bottom: 10px;
+}
+
+#titulo2 {
+    font-size: 28px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilo de imagen y texto */
+.img-texto1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.img-texto1 img.imagen {
+    width: 40%;
+    max-width: 150px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.img-texto1 p {
+    flex: 1;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.img-texto2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.img-texto2 img.imagen {
+    width: 40%;
+    max-width: 150px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.img-texto2 p {
+    flex: 1;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.img-texto3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.img-texto3 img.imagen {
+    width: 40%;
+    max-width: 150px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.img-texto3 p {
+    flex: 1;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Botón de regreso */
+#boton-regresar {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 3%;
+}
+
+#boton-regresar:hover {
+    background-color: #357ABD;
+}

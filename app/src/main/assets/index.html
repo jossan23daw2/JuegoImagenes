@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Página de Ayuda</title>
+</head>
+<body style="background-image: url('img/fodno.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+
+<div id="contenedor">
+    <h1 id="titulo">Página de Ayuda</h1>
+    <h2 id="titulo2">¿Cómo jugar?</h2>
+    
+    <div class="img-texto1">
+        <img src="img/img1.gif" class="imagen">
+        <p>En el menu, debemos poner el nombre que queramos para poder empezar</p>
+    </div>
+    <div class="img-texto2">
+        <img src="img/img2.gif" class="imagen">
+        <p>El juego consiste en que tendrás una imagen la cual será una skin de un personaje del smah bros, tendrás que pulsar la buena para sumar 50 puntos, en cambio si pulsas mal se te restaran 50 puntos</p>
+    </div>
+    <div class="img-texto3">
+        <img src="img/img3.gif"  class="imagen">
+        <p>Al final al acabar las 10 rondas se te mostrara la tabla de puntajes de tu partida jugada y de las anteriores</p>
+    </div>
+
+    
+    <button onclick="anarMain()" id="boton-regresar">Regresar al Juego</button>
+</div>
+
+<script type="text/javascript">
+    function anarMain() {
+        Android.anarMain();
+    }
+</script>
+</body>
+</html>

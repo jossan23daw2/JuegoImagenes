@@ -2,25 +2,41 @@ package com.example.juegominecraft;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class PuntuacioFinalActivity extends AppCompatActivity {
 
     private SQLiteActivity db;
+    private TableLayout tablaPuntuaciones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puntuaciofinal);
 
-        TableLayout tablaPuntuaciones = findViewById(R.id.tablaPuntuacion);
+        db = new SQLiteActivity(this);
+        tablaPuntuaciones = findViewById(R.id.tablaPuntuacion);
+        Button btnBorrarProgreso = findViewById(R.id.btnBorrarProgreso);
 
-        SQLiteActivity dbHelper = new SQLiteActivity(this);
-        Cursor cursor = dbHelper.obtenirTotsElsJugadors();
+        cargarDatos();
+        btnBorrarProgreso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.borrarTodo();
+                tablaPuntuaciones.removeAllViews();
+                Toast.makeText(PuntuacioFinalActivity.this, "Progreso borrado", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    private void cargarDatos() {
+        Cursor cursor = db.obtenirTotsElsJugadors();
         if (cursor.moveToFirst()) {
             do {
                 TableRow fila = new TableRow(this);

@@ -20,7 +20,7 @@ public class AyudaActivity extends AppCompatActivity {
 
         navegador.addJavascriptInterface(new WebAppInterface(), "Android");
 
-        navegador.loadUrl("file:///android_asset/prova.html");
+        navegador.loadUrl("file:///android_asset/index.html");
     }
 
     private class WebAppInterface {

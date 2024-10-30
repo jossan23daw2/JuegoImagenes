@@ -47,7 +47,6 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
     }
 
     private void cargarDatos() {
-        // Agregar encabezado de tabla
         TableRow encabezado = new TableRow(this);
 
         TextView encabezadoNombre = new TextView(this);

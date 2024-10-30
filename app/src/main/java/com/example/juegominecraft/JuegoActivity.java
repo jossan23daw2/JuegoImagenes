@@ -3,13 +3,20 @@ package com.example.juegominecraft;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +34,7 @@ public class JuegoActivity extends AppCompatActivity {
     private int seleccioIndex = -1;
     private int contador = 0;
     public String nombreJugador;
-
+    private LinearLayout coordinatorLayout;
     private SQLiteActivity dbHelper;
     private int puntsActuals;
 
@@ -49,6 +56,8 @@ public class JuegoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         imatgePrincipal = findViewById(R.id.imatgePrincipal);
         barraDeProgres = findViewById(R.id.barraDeProgres);
@@ -75,6 +84,26 @@ public class JuegoActivity extends AppCompatActivity {
         ocultarOpcions();
         crearJoc();
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_ayuda) {
+            obrirAjustos();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void obrirAjustos() {
+        Intent intent = new Intent(JuegoActivity.this, AyudaActivity.class);
+        startActivity(intent);
+    }
+
 
     private void crearJoc() {
         Random random = new Random();
@@ -162,7 +191,7 @@ public class JuegoActivity extends AppCompatActivity {
         for (ImageView option : arrayOpcions) {
             option.setVisibility(View.INVISIBLE);
         }
-            botoVerifica.setVisibility(View.INVISIBLE);
+        botoVerifica.setVisibility(View.INVISIBLE);
     }
 
     private void ensenyaOpcions() {

@@ -27,9 +27,11 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
         android:gravity="center"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginBottom="100dp">
 
         <EditText
             android:id="@+id/input_name"

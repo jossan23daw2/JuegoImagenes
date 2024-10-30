@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 .setAction("Action", null).show();
         Intent intent = new Intent(MainActivity.this, AyudaActivity.class);
         startActivity(intent);
-
     }
 
     private void guardarNombreEnDB(String nombre) {

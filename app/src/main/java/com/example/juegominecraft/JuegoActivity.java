@@ -3,6 +3,7 @@ package com.example.juegominecraft;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,6 +105,17 @@ public class JuegoActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("JuegoActivity", "JuegoActivity paused");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("JuegoActivity", "JuegoActivity resumed");
+    }
 
     private void crearJoc() {
         Random random = new Random();

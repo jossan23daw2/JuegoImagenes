@@ -26,8 +26,6 @@ public class AyudaActivity extends AppCompatActivity {
     private class WebAppInterface {
         @JavascriptInterface
         public void anarMain() {
-            Intent intent = new Intent(AyudaActivity.this, MainActivity.class);
-            startActivity(intent);
             finish();
         }
     }

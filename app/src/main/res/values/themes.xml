@@ -3,7 +3,8 @@
     <style name="Base.Theme.JuegoMinecraft" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+        <item name="colorPrimaryDark">#000000</item>SS
 
+    </style>
     <style name="Theme.JuegoMinecraft" parent="Base.Theme.JuegoMinecraft" />
 </resources>

@@ -79,6 +79,12 @@ public class SQLiteActivity extends SQLiteOpenHelper {
         valors.put(COLUMNA_PUNTS, punts);
         db.update(TAULA_PUNTS, valors, COLUMNA_NOM + "=?", new String[] {nombre});
     }
+    public Cursor obtenirUltimJugador() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT " + COLUMNA_NOM + ", " + COLUMNA_PUNTS +
+                " FROM " + TAULA_PUNTS +
+                " ORDER BY " + COLUMNA_ID + " DESC LIMIT 1", null);
+    }
 
     public Cursor obtenirTotsElsJugadors() {
         SQLiteDatabase db = this.getReadableDatabase();

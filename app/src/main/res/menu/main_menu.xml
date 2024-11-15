@@ -5,6 +5,4 @@
         android:id="@+id/action_ayuda"
         android:title="@string/ayuda"
         app:showAsAction="never" />
-
-
 </menu>

@@ -3,6 +3,7 @@ package com.example.juegominecraft;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -15,7 +16,9 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
 
     private SQLiteActivity db;
     private TableLayout tablaPuntuaciones;
-    private Button volverJugar, btnBorrarProgreso;
+    private Button volverJugar, btnBorrarProgreso, btnGuardarCalendario;
+    private String nombreJugador;
+    private int puntuacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,25 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
         tablaPuntuaciones = findViewById(R.id.tablaPuntuacion);
         btnBorrarProgreso = findViewById(R.id.btnBorrarProgreso);
         volverJugar = findViewById(R.id.volverJugar);
+        btnGuardarCalendario = findViewById(R.id.btnGuardarCalendario);
+
+        Intent intent = getIntent();
+        puntuacion = intent.getIntExtra("PUNTS", 0);
+        nombreJugador = intent.getStringExtra("NOMBRE_JUGADOR");
 
         cargarDatos();
+
+        if (nombreJugador == null || nombreJugador.isEmpty()) {
+            Cursor cursor = db.obtenirTotsElsJugadors();
+            if (cursor.moveToFirst()) {
+                nombreJugador = cursor.getString(cursor.getColumnIndexOrThrow(SQLiteActivity.COLUMNA_NOM));
+                puntuacion = cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteActivity.COLUMNA_PUNTS));
+            }
+            cursor.close();
+        }
+
+        Log.d("PuntuacioFinalActivity", "Jugador cargado: " + nombreJugador + ", Puntuación: " + puntuacion);
+
         btnBorrarProgreso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +64,26 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btnGuardarCalendario.setOnClickListener(v -> guardarEnCalendario());
     }
+
+    private void guardarEnCalendario() {
+        Cursor cursor = db.obtenirUltimJugador();
+        if (cursor.moveToFirst()) { // Obtén siempre el último jugador
+            nombreJugador = cursor.getString(cursor.getColumnIndexOrThrow(SQLiteActivity.COLUMNA_NOM));
+            puntuacion = cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteActivity.COLUMNA_PUNTS));
+        }
+        cursor.close();
+
+        Log.d("PuntuacioFinalActivity", "Guardando en calendario: Jugador=" + nombreJugador + ", Puntuación=" + puntuacion);
+
+        Intent intent = new Intent(PuntuacioFinalActivity.this, CalendariActivity.class);
+        intent.putExtra("NOMBRE_JUGADOR", nombreJugador);
+        intent.putExtra("PUNTS", puntuacion);
+        intent.putExtra("FECHA", System.currentTimeMillis());
+        startActivity(intent);
+    }
+
 
     private void cargarDatos() {
         TableRow encabezado = new TableRow(this);

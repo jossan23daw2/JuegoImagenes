@@ -81,9 +81,6 @@ public class CalendariActivity extends AppCompatActivity {
             }
         }
 
-
-
-        setContentView(R.layout.activity_puntuaciofinal);
         contentResolver = getContentResolver();
 
         checkAndRequestPermissions();
@@ -124,6 +121,7 @@ public class CalendariActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Error al crear el evento", Toast.LENGTH_SHORT).show();
         }
+        finish();
     }
 
 
@@ -195,24 +193,18 @@ public class CalendariActivity extends AppCompatActivity {
                 cursor.close();
             }
         }
-        return -1; // Return -1 if calendar not found
+        return -1;
     }
     private void checkAndRequestPermissions() {
-        List<String> permissionsNeeded = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            permissionsNeeded.add(Manifest.permission.WRITE_CALENDAR);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            permissionsNeeded.add(Manifest.permission.READ_CALENDAR);
-        }
-
-        if (!permissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, permissionsNeeded.toArray(new String[0]), PERMISSIONS_REQUEST_READ_CALENDAR);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_CALENDAR},
+                    PERMISSIONS_REQUEST_READ_CALENDAR);
         } else {
-            // Si los permisos ya están concedidos, ejecuta la lógica principal
             afegirEvent(nombreJugador, puntuacion, hora);
+            finish();
         }
     }
 
@@ -222,10 +214,13 @@ public class CalendariActivity extends AppCompatActivity {
 
         if (requestCode == PERMISSIONS_REQUEST_READ_CALENDAR) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permisos concedidos, agrega el evento
                 afegirEvent(nombreJugador, puntuacion, hora);
             } else {
+                // Permisos denegados, muestra un mensaje
                 Toast.makeText(this, "Permisos denegados. No se puede crear el evento.", Toast.LENGTH_SHORT).show();
             }
+            finish(); // Finaliza la actividad, independientemente del resultado
         }
     }
 

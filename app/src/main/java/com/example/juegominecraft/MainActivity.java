@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         if(item.getItemId()==R.id.action_ayuda){
             obrirAjustos();
             return true;
+        } else if (item.getItemId()==R.id.action_calendari) {
+            obrirCalendari();
+            return true;
         }
         return false;
     }
@@ -71,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
         Snackbar.make(coordinatorLayout, "AYUDA", Snackbar.LENGTH_SHORT)
                 .setAction("Action", null).show();
         Intent intent = new Intent(MainActivity.this, AyudaActivity.class);
+        startActivity(intent);
+    }
+    private void obrirCalendari() {
+        Snackbar.make(coordinatorLayout, "CALENDARI", Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_APP_CALENDAR);
         startActivity(intent);
     }
 

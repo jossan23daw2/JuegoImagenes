@@ -5,4 +5,8 @@
         android:id="@+id/action_ayuda"
         android:title="@string/ayuda"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_calendari"
+        android:title="@string/calendari"
+        app:showAsAction="never" />
 </menu>

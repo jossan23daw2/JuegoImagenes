@@ -180,6 +180,8 @@ public class JuegoActivity extends AppCompatActivity {
         int imagenSeleccionada = actualImatgesSet[randomIndex];
         imatgePrincipal.setImageResource(imagenSeleccionada);
 
+        text.setVisibility(View.INVISIBLE);
+
         String nombreImagen = getResources().getResourceEntryName(imagenSeleccionada);
         obtenerTextoImagen(nombreImagen);
 
@@ -201,6 +203,17 @@ public class JuegoActivity extends AppCompatActivity {
 
         ocultarOpcions();
         tempsImatge();
+
+        new CountDownTimer(5000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                text.setVisibility(View.VISIBLE);
+            }
+        }.start();
     }
 
     private void obtenerTextoImagen(String nombreImagen) {

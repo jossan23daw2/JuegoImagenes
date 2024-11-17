@@ -1,4 +1,4 @@
-/* General */
+
 body {
     font-family: Arial, sans-serif;
     color: #333;
@@ -10,7 +10,6 @@ body {
     min-height: 100vh;
 }
 
-/* Contenedor principal */
 #contenedor {
     max-width: 800px;
     width: 90%;
@@ -23,7 +22,6 @@ body {
     text-align: center;
 }
 
-/* Títulos */
 #titulo {
     font-size: 36px;
     font-family: 'Courier New', Courier, monospace;
@@ -38,7 +36,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Estilo de imagen y texto */
 .img-texto1 {
     display: flex;
     align-items: center;
@@ -111,7 +108,6 @@ body {
     margin: 0;
 }
 
-/* Botón de regreso */
 #boton-regresar {
     padding: 10px 20px;
     font-size: 18px;

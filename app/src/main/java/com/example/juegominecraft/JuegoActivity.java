@@ -3,6 +3,7 @@ package com.example.juegominecraft;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,12 +21,22 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class JuegoActivity extends AppCompatActivity {
 
+    private static final String URL = "http:/192.168.56.1:8000/";
+    private TextView text;
     private ImageView imatgePrincipal;
     private ProgressBar barraDeProgres;
     private ImageView imatgeOpcio1, imatgeOpcio2, imatgeOpcio3, imatgeOpcio4;
@@ -67,7 +79,7 @@ public class JuegoActivity extends AppCompatActivity {
         imatgeOpcio3 = findViewById(R.id.imatgeOpcio3);
         imatgeOpcio4 = findViewById(R.id.imatgeOpcio4);
         botoVerifica = findViewById(R.id.botoVerifica);
-
+        text = findViewById(R.id.text);
         arrayOpcions = new ImageView[] {imatgeOpcio1, imatgeOpcio2, imatgeOpcio3, imatgeOpcio4};
 
         dbHelper = new SQLiteActivity(this);
@@ -84,7 +96,46 @@ public class JuegoActivity extends AppCompatActivity {
 
         ocultarOpcions();
         crearJoc();
+
+        StrictMode.ThreadPolicy politiques = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(politiques);
+
+        String dadesLLegides = null;
+        try {
+            java.net.URL urlObj = new URL(URL);
+            dadesLLegides = llegirJSON(urlObj);
+            Log.i(MainActivity.class.getName(), dadesLLegides);
+            text.setText(dadesLLegides);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject objecte = new JSONObject(dadesLLegides);
+            Log.i(MainActivity.class.getName(), "Nombre d'entrades " + objecte.length());
+            Log.i(MainActivity.class.getName(), objecte.getString("nom"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    public String llegirJSON(URL urlObj) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        HttpURLConnection clientHTTP = (HttpURLConnection) urlObj.openConnection();
+
+        if (clientHTTP.getResponseCode() == 200) {
+            InputStream contingut = clientHTTP.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(contingut));
+            String linia;
+            while ((linia = reader.readLine()) != null) {
+                builder.append(linia);
+            }
+        } else {
+            Log.e(MainActivity.class.toString(), "Problemes HTTP");
+        }
+        return builder.toString();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -126,7 +177,11 @@ public class JuegoActivity extends AppCompatActivity {
         List<Integer> indexU = new ArrayList<>();
 
         int randomIndex = random.nextInt(actualImatgesSet.length);
-        imatgePrincipal.setImageResource(actualImatgesSet[randomIndex]);
+        int imagenSeleccionada = actualImatgesSet[randomIndex];
+        imatgePrincipal.setImageResource(imagenSeleccionada);
+
+        String nombreImagen = getResources().getResourceEntryName(imagenSeleccionada);
+        obtenerTextoImagen(nombreImagen);
 
         indexU.add(randomIndex);
 
@@ -147,6 +202,24 @@ public class JuegoActivity extends AppCompatActivity {
         ocultarOpcions();
         tempsImatge();
     }
+
+    private void obtenerTextoImagen(String nombreImagen) {
+        new Thread(() -> {
+            try {
+                URL url = new URL(URL + "?nom=" + nombreImagen);
+                String respuesta = llegirJSON(url);
+
+                JSONObject jsonObject = new JSONObject(respuesta);
+                String textoImagen = jsonObject.getString("nom");
+
+                runOnUiThread(() -> text.setText(textoImagen));
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> text.setText("Error al obtener el texto de la imagen."));
+            }
+        }).start();
+    }
+
 
     private void tempsImatge() {
         barraDeProgres.setMax(1000);
@@ -228,7 +301,7 @@ public class JuegoActivity extends AppCompatActivity {
         ocultarOpcions();
         contador++;
 
-        if (contador >= 1) {
+        if (contador >= 10) {
             mostrarPuntuacion();
         } else {
             crearJoc();
@@ -236,4 +309,3 @@ public class JuegoActivity extends AppCompatActivity {
     }
 
 }
-

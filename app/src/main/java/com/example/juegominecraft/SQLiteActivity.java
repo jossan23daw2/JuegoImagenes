@@ -91,6 +91,16 @@ public class SQLiteActivity extends SQLiteOpenHelper {
         return db.rawQuery("SELECT " + COLUMNA_NOM + ", " + COLUMNA_PUNTS + " FROM " + TAULA_PUNTS, null);
     }
 
+    public Cursor obtenirTotsElsJugadorsOrdenados() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery(
+                "SELECT " + COLUMNA_NOM + ", " + COLUMNA_PUNTS +
+                        " FROM " + TAULA_PUNTS +
+                        " ORDER BY " + COLUMNA_PUNTS + " DESC",
+                null
+        );
+    }
+
     public int obtenirPunts() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + COLUMNA_PUNTS + " FROM " + TAULA_PUNTS + " LIMIT 1", null);

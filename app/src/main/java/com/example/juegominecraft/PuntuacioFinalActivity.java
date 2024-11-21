@@ -106,7 +106,7 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
 
         tablaPuntuaciones.addView(encabezado);
 
-        Cursor cursor = db.obtenirTotsElsJugadors();
+        Cursor cursor = db.obtenirTotsElsJugadorsOrdenados(); 
         if (cursor.moveToFirst()) {
             int rowIndex = 0;
             do {

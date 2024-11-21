@@ -13,67 +13,62 @@ class ClasseGestora(BaseHTTPRequestHandler):
         path, _, query_string = self.path.partition('?')
         query = parse_qs(query_string)
 
-        # Diccionario de textos asociados a cada nombre de imagen
         textos_imagenes = {
-            "bayonetta0": ".",
-            "bayonetta1": "Bayonetta, lista para la batalla.",
-            "bayonetta2": "Bayonetta, con un aire elegante y mortal.",
-            "bayonetta3": "Bayonetta, desatada con su arsenal mágico.",
-            "donkey0": "Donkey Kong, el rey de la selva.",
-            "donkey1": "Donkey Kong, un héroe siempre listo.",
-            "donkey2": "Donkey Kong, disfrutando de una banana.",
-            "donkey3": "Donkey Kong, demostrando su fuerza.",
-            "sonic0": "Sonic, el erizo más rápido del mundo.",
-            "sonic1": "Sonic, corriendo hacia la victoria.",
-            "sonic2": "Sonic, el héroe azul en acción.",
-            "sonic3": "Sonic, siempre en movimiento.",
-            "canela0": "Canela, siempre servicial y amigable.",
-            "canela1": "Canela, lista para ayudarte.",
-            "canela2": "Canela, con su actitud cálida y optimista.",
-            "canela3": "Canela, la mejor asistente.",
-            "greninja0": "Greninja, el maestro ninja de las sombras.",
-            "greninja1": "Greninja, rápido y letal.",
-            "greninja2": "Greninja, preparado para el combate.",
-            "greninja3": "Greninja, un verdadero estratega.",
-            "ike0": "Ike, un guerrero con un fuerte sentido del honor.",
-            "ike1": "Ike, empuñando su poderosa espada.",
-            "ike2": "Ike, demostrando su fuerza en batalla.",
-            "ike3": "Ike, un líder nato.",
-            "incineroar0": "Incineroar, el luchador felino.",
-            "incineroar1": "Incineroar, listo para un combate intenso.",
-            "incineroar2": "Incineroar, con su fuego característico.",
-            "incineroar3": "Incineroar, el campeón del ring.",
-            "link0": "Link, el héroe de Hyrule.",
-            "link1": "Link, empuñando la espada maestra.",
-            "link2": "Link, listo para salvar el reino.",
-            "link3": "Link, siempre valiente y decidido.",
-            "steve0": "Steve, el constructor del mundo de Minecraft.",
-            "steve1": "Steve, recolectando recursos.",
-            "steve2": "Steve, en su aventura minera.",
-            "steve3": "Steve, enfrentando los peligros del Nether.",
-            "terry0": "Terry, el luchador legendario.",
-            "terry1": "Terry, listo para darlo todo.",
-            "terry2": "Terry, un maestro de las artes marciales.",
-            "terry3": "Terry, el héroe de South Town."
+            "bayonetta0": "Tiene un tono oscuro",
+            "bayonetta1": "Tiene un tono grisáceo",
+            "bayonetta2": "Tiene un tono Blanquecino",
+            "bayonetta3": "Tiene un tono Rojizo",
+            "donkey0": "El original",
+            "donkey1": "Tiene un tono oscuro",
+            "donkey2": "Tiene un tono anaranjado",
+            "donkey3": "Se parece al oro",
+            "sonic0": "Es de los originales",
+            "sonic1": "Tiene un colorparecido a la odsidiana",
+            "sonic2": "Es mas claro que el original",
+            "sonic3": "Es dl mismo color que shadow",
+            "canela0": "La original",
+            "canela1": "Tiene el mismo color que una piruleta",
+            "canela2": "Tiene el mismo color que incineroar",
+            "canela3": "Tiene el mismo color que la oscuridad",
+            "greninja0": "El original",
+            "greninja1": "Parece un chicle de fresa",
+            "greninja2": "Tiene el mismo color que un umbreon",
+            "greninja3": "Tiene el mismo color que un ghastly",
+            "ike0": "El original",
+            "ike1": "Tiene el mismo color que sonic",
+            "ike2": "Igual que la orinial pero un toque mas oscuro",
+            "ike3": "Igual que la original pero con un pequeño cambio en los pantalones",
+            "incineroar0": "el original",
+            "incineroar1": "Con un color mas parecido a la obsidiana",
+            "incineroar2": "Con un color parecido al carbon",
+            "incineroar3": "Igual que el orginal pero alrevés",
+            "link0": "El original",
+            "link1": "Link con un toque mas antiguo",
+            "link2": "Link con toque antiguo pero con color mas claro",
+            "link3": "Link de nueva generacion con color azulado",
+            "steve0": "el original",
+            "steve1": "Steve pero juega al golf",
+            "steve2": "steve no muerto",
+            "steve3": "steve del end",
+            "terry0": "el original",
+            "terry1": "Terry azulado.",
+            "terry2": "Terry con color de un enderman",
+            "terry3": "Terry del oro"
         }
 
-        # Extraer el nombre de la imagen del parámetro 'nom'
         nombre_imagen = query.get("nom", [""])[0]
         texto = textos_imagenes.get(nombre_imagen, "Texto no encontrado para esta imagen.")
 
-        # Responder con el texto en formato JSON
         datos = json.dumps({"nom": texto})
         self.wfile.write(datos.encode("utf-8"))
 
 
-# Función para iniciar el servidor
 def run(server_class=HTTPServer, handler_class=ClasseGestora, port=8000):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
     print('Iniciando servidor HTTP en el puerto', port)
     httpd.serve_forever()
 
-# Ejecutar el servidor
 if __name__ == "__main__":
     from sys import argv
     if len(argv) == 2:

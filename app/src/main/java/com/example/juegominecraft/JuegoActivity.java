@@ -35,7 +35,7 @@ import java.util.Random;
 
 public class JuegoActivity extends AppCompatActivity {
 
-    private static final String URL = "http:/192.168.56.1:8000/";
+    private static final String URL = "http:/192.168.30.129:8000/";
     private TextView text;
     private ImageView imatgePrincipal;
     private ProgressBar barraDeProgres;

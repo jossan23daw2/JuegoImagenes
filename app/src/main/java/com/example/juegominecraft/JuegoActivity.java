@@ -325,7 +325,7 @@ public class JuegoActivity extends AppCompatActivity {
         ocultarOpcions();
         contador++;
 
-        if (contador >= 1) {
+        if (contador >= 10) {
             mostrarPuntuacion();
         } else {
             crearJoc();

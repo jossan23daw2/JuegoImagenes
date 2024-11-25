@@ -15,49 +15,49 @@ class ClasseGestora(BaseHTTPRequestHandler):
 
         textos_imagenes = {
             "bayonetta0": "Tiene un tono oscuro",
-            "bayonetta1": "Tiene un tono grisáceo",
+            "bayonetta1": "Tiene un tono grisáceo , Te esta gustando el juego?",
             "bayonetta2": "Tiene un tono Blanquecino",
             "bayonetta3": "Tiene un tono Rojizo",
             "donkey0": "El original",
             "donkey1": "Tiene un tono oscuro",
             "donkey2": "Tiene un tono anaranjado",
-            "donkey3": "Se parece al oro",
-            "sonic0": "Es de los originales",
+            "donkey3": "Se parece al oro , Te esta gustando el juego?",
+            "sonic0": "Es de los originales , Te esta gustando el juego?",
             "sonic1": "Tiene un colorparecido a la odsidiana",
             "sonic2": "Es mas claro que el original",
-            "sonic3": "Es dl mismo color que shadow",
+            "sonic3": "Es el mismo color que shadow",
             "canela0": "La original",
             "canela1": "Tiene el mismo color que una piruleta",
-            "canela2": "Tiene el mismo color que incineroar",
+            "canela2": "Tiene el mismo color que incineroar , Te esta gustando el juego?",
             "canela3": "Tiene el mismo color que la oscuridad",
             "greninja0": "El original",
             "greninja1": "Parece un chicle de fresa",
-            "greninja2": "Tiene el mismo color que un umbreon",
+            "greninja2": "Tiene el mismo color que un umbreon , Te esta gustando el juego?",
             "greninja3": "Tiene el mismo color que un ghastly",
             "ike0": "El original",
-            "ike1": "Tiene el mismo color que sonic",
+            "ike1": "Tiene el mismo color que sonic , Te esta gustando el juego?",
             "ike2": "Igual que la orinial pero un toque mas oscuro",
             "ike3": "Igual que la original pero con un pequeño cambio en los pantalones",
             "incineroar0": "el original",
             "incineroar1": "Con un color mas parecido a la obsidiana",
             "incineroar2": "Con un color parecido al carbon",
-            "incineroar3": "Igual que el orginal pero alrevés",
+            "incineroar3": "Igual que el orginal pero alrevés , Te esta gustando el juego?",
             "link0": "El original",
-            "link1": "Link con un toque mas antiguo",
+            "link1": "Link con un toque mas antiguo , Te esta gustando el juego?",
             "link2": "Link con toque antiguo pero con color mas claro",
             "link3": "Link de nueva generacion con color azulado",
             "steve0": "el original",
             "steve1": "Steve pero juega al golf",
-            "steve2": "steve no muerto",
+            "steve2": "steve no muerto , Te esta gustando el juego?",
             "steve3": "steve del end",
             "terry0": "el original",
-            "terry1": "Terry azulado.",
+            "terry1": "Terry azulado , Te esta gustando el juego?",
             "terry2": "Terry con color de un enderman",
             "terry3": "Terry del oro"
         }
 
         nombre_imagen = query.get("nom", [""])[0]
-        texto = textos_imagenes.get(nombre_imagen, "Texto no encontrado para esta imagen.")
+        texto = textos_imagenes.get(nombre_imagen, "no encontrado")
 
         datos = json.dumps({"nom": texto})
         self.wfile.write(datos.encode("utf-8"))

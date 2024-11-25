@@ -69,7 +69,7 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
 
     private void guardarEnCalendario() {
         Cursor cursor = db.obtenirUltimJugador();
-        if (cursor.moveToFirst()) { // Obtén siempre el último jugador
+        if (cursor.moveToFirst()) {
             nombreJugador = cursor.getString(cursor.getColumnIndexOrThrow(SQLiteActivity.COLUMNA_NOM));
             puntuacion = cursor.getInt(cursor.getColumnIndexOrThrow(SQLiteActivity.COLUMNA_PUNTS));
         }

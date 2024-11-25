@@ -35,7 +35,7 @@ import java.util.Random;
 
 public class JuegoActivity extends AppCompatActivity {
 
-    private static final String URL = "http:/192.168.102.125:8000/";
+    private static final String URL = "http:/192.168.56.1:8000/";
     private TextView text;
     private ImageView imatgePrincipal;
     private ProgressBar barraDeProgres;
@@ -50,6 +50,9 @@ public class JuegoActivity extends AppCompatActivity {
     private LinearLayout coordinatorLayout;
     private SQLiteActivity dbHelper;
     private int puntsActuals;
+    private long tiempoInicio;
+    private long tiempoFinal;
+
 
     private int[] bayonettaI = {R.drawable.bayonetta0, R.drawable.bayonetta1, R.drawable.bayonetta2, R.drawable.bayonetta3};
     private int[] donkeyI = {R.drawable.donkey0, R.drawable.donkey1, R.drawable.donkey2, R.drawable.donkey3};
@@ -71,6 +74,8 @@ public class JuegoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_juego);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        tiempoInicio = System.currentTimeMillis();
 
         imatgePrincipal = findViewById(R.id.imatgePrincipal);
         barraDeProgres = findViewById(R.id.barraDeProgres);
@@ -298,11 +303,17 @@ public class JuegoActivity extends AppCompatActivity {
         }
     }
     private void mostrarPuntuacion() {
+        tiempoFinal = System.currentTimeMillis();
+        long tiempoTotal = (tiempoFinal - tiempoInicio) / 1000;
+
+        dbHelper.actualizaTiempoJugador(nombreJugador, tiempoTotal);
+
         Intent intent = new Intent(JuegoActivity.this, PuntuacioFinalActivity.class);
         intent.putExtra("PUNTS", puntsActuals);
         startActivity(intent);
         finish();
     }
+
     private void resetJoc() {
         seleccionat = false;
         seleccioIndex = -1;
@@ -314,7 +325,7 @@ public class JuegoActivity extends AppCompatActivity {
         ocultarOpcions();
         contador++;
 
-        if (contador >= 10) {
+        if (contador >= 1) {
             mostrarPuntuacion();
         } else {
             crearJoc();

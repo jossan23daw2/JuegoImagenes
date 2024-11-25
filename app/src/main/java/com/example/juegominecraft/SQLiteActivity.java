@@ -9,18 +9,21 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SQLiteActivity extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "puntuacio.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 5;
 
     public static final String TAULA_PUNTS = "puntuacio";
     public static final String COLUMNA_ID = "id";
     public static final String COLUMNA_PUNTS = "punts";
     public static final String COLUMNA_NOM = "nombre";
+    public static final String COLUMNA_TIEMPO = "tiempo";
 
     private static final String SQL_CREACIO_TAULA_PUNTS =
             "CREATE TABLE " + TAULA_PUNTS + " (" +
                     COLUMNA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMNA_PUNTS + " INTEGER, " +
-                    COLUMNA_NOM + " TEXT)";
+                    COLUMNA_NOM + " TEXT, " +
+                    COLUMNA_TIEMPO + " INTEGER)";
+
 
     public SQLiteActivity(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -43,7 +46,7 @@ public class SQLiteActivity extends SQLiteOpenHelper {
 
     public int obtenirPuntuacioPerNom(String nombre) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " + COLUMNA_PUNTS + " FROM " + TAULA_PUNTS + " WHERE " + COLUMNA_NOM + "=?", new String[] {nombre});
+        Cursor cursor = db.rawQuery("SELECT " + COLUMNA_PUNTS + " FROM " + TAULA_PUNTS + " WHERE " + COLUMNA_NOM + "=?", new String[]{nombre});
         if (cursor.moveToFirst()) {
             int punts = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMNA_PUNTS));
             cursor.close();
@@ -52,6 +55,14 @@ public class SQLiteActivity extends SQLiteOpenHelper {
         cursor.close();
         return 0;
     }
+
+    public void actualizaTiempoJugador(String nombre, long tiempo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valors = new ContentValues();
+        valors.put(COLUMNA_TIEMPO, tiempo);
+        db.update(TAULA_PUNTS, valors, COLUMNA_NOM + "=?", new String[]{nombre});
+    }
+
 
     public boolean jugadorExistent(String nombre) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -77,8 +88,9 @@ public class SQLiteActivity extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues valors = new ContentValues();
         valors.put(COLUMNA_PUNTS, punts);
-        db.update(TAULA_PUNTS, valors, COLUMNA_NOM + "=?", new String[] {nombre});
+        db.update(TAULA_PUNTS, valors, COLUMNA_NOM + "=?", new String[]{nombre});
     }
+
     public Cursor obtenirUltimJugador() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT " + COLUMNA_NOM + ", " + COLUMNA_PUNTS +
@@ -94,12 +106,13 @@ public class SQLiteActivity extends SQLiteOpenHelper {
     public Cursor obtenirTotsElsJugadorsOrdenados() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery(
-                "SELECT " + COLUMNA_NOM + ", " + COLUMNA_PUNTS +
+                "SELECT " + COLUMNA_NOM + ", " + COLUMNA_PUNTS + ", " + COLUMNA_TIEMPO +
                         " FROM " + TAULA_PUNTS +
                         " ORDER BY " + COLUMNA_PUNTS + " DESC",
                 null
         );
     }
+
 
     public int obtenirPunts() {
         SQLiteDatabase db = this.getReadableDatabase();

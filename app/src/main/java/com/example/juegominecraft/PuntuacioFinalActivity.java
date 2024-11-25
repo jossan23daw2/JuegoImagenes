@@ -83,6 +83,11 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
         intent.putExtra("FECHA", System.currentTimeMillis());
         startActivity(intent);
     }
+    private String formatTiempo(long tiempoSegundos) {
+        long minutos = tiempoSegundos / 60;
+        long segundos = tiempoSegundos % 60;
+        return minutos + ":" + (segundos < 10 ? "0" + segundos : segundos);
+    }
 
 
     private void cargarDatos() {
@@ -103,6 +108,15 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
         encabezadoPuntuacion.setTextColor(getResources().getColor(R.color.white));
         encabezadoPuntuacion.setBackgroundColor(getResources().getColor(R.color.rojo));
         encabezado.addView(encabezadoPuntuacion);
+
+        TextView encabezadoTiempo = new TextView(this);
+        encabezadoTiempo.setText("Tiempo");
+        encabezadoTiempo.setPadding(20, 10, 20, 10);
+        encabezadoTiempo.setTextSize(22);
+        encabezadoTiempo.setTextColor(getResources().getColor(R.color.white));
+        encabezadoTiempo.setBackgroundColor(getResources().getColor(R.color.rojo));
+        encabezado.addView(encabezadoTiempo);
+
 
         tablaPuntuaciones.addView(encabezado);
 
@@ -127,6 +141,16 @@ public class PuntuacioFinalActivity extends AppCompatActivity {
                 puntuacionJugador.setTextColor(getResources().getColor(R.color.white));
                 puntuacionJugador.setBackgroundColor(rowIndex % 2 == 0 ? getResources().getColor(R.color.gris) : getResources().getColor(R.color.black));
                 fila.addView(puntuacionJugador);
+
+                TextView tiempoJugador = new TextView(this);
+                long tiempoSegundos = cursor.getLong(cursor.getColumnIndexOrThrow(SQLiteActivity.COLUMNA_TIEMPO));
+                tiempoJugador.setText(formatTiempo(tiempoSegundos));
+                tiempoJugador.setPadding(20, 10, 20, 10);
+                tiempoJugador.setTextSize(20);
+                tiempoJugador.setTextColor(getResources().getColor(R.color.white));
+                tiempoJugador.setBackgroundColor(rowIndex % 2 == 0 ? getResources().getColor(R.color.gris) : getResources().getColor(R.color.black));
+                fila.addView(tiempoJugador);
+
 
                 tablaPuntuaciones.addView(fila);
                 rowIndex++;
